@@ -6,6 +6,7 @@
 增加mysql数据库
 增加sql脚本和运行脚本
 
-- [Koa-genentor](https://chenshenhai.github.io/koa2-note/)
-
 数据库配置等敏感信息需要额外配置
+
+
+- 参考 [Koa-genentor](https://chenshenhai.github.io/koa2-note/)
