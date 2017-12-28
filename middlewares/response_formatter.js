@@ -11,10 +11,10 @@ module.exports = async (ctx, next) => {
   // 判断返回数据
   const body = ctx.body
   // 返回的错误code
-  const code = Object.prototype.hasOwnProperty.call(body, 'code') ? body.code : 'ERROR'
+  const code = Object.prototype.hasOwnProperty.call(body, 'code') ? (body.code + '') : 'ERROR'
   const message = messageCode[code]
   // 封装响应格式
-  if (body && code === 0) {
+  if (body && code === "0") {
     ctx.body = {
       code: 0,
       message: message,

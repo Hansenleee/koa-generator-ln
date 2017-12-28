@@ -16,7 +16,7 @@ module.exports = {
     // 返回结果
     if (result.length == 0) {
       ctx.body = {
-        code: 'USER_LOGIN_INFO_ERROR',
+        code: 'MANAGE_USER_LOGIN_INFO_ERROR',
       }
     } else {
       ctx.body = {
