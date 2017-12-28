@@ -26,14 +26,6 @@ const createAllTables = async () => {
 
     for ( let [ i, shell ] of sqlShellList.entries() ) {
       if ( shell.trim() ) {
-        // query( shell ).then((result) => {
-        //   // 判断 key 下的文件 i 行是否执行成功
-        //   if ( result.serverStatus * 1 === 2 ) {
-        //     eventLog( null,  key, i)
-        //   } else {
-        //     eventLog( true,  key, i) 
-        //   }
-        // })
         let result = await query( shell )
         // 判断 key 下的文件 i 行是否执行成功
         if ( result.serverStatus * 1 === 2 ) {
