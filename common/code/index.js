@@ -7,5 +7,8 @@ module.exports = {
   '-1': '请登录后访问',
   'ERROR': '接口异常',
   'UNAVAILABLE': '接口不允许访问',
-  'MANAGE_USER_LOGIN_INFO_ERROR': '登录用户信息有误！'
+  'GLOBAL_PARAMS_ERROR': '参数错误，请检查后重新发起请求',
+  'MANAGE_USER_LOGIN_INFO_ERROR': '登录用户信息有误！',
+  'MANAGE_BLOG_CATE_CODE_REPEAT': '分类的code重复',
+  'MANAGE_BLOG_CATE_ERROR': '分类更改失败',
 }
