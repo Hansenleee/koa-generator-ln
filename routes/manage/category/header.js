@@ -1,7 +1,7 @@
 /**
  * 博客分类操作信息
  */
-const query = require('../../utils/db/sql')
+const query = require('../../../utils/db/sql')
 
 // 全局操作函数
 const _actions = {
@@ -118,16 +118,4 @@ module.exports = {
       code: 0,
     }
   },
-  /**
-   * 插入新的行分类信息
-   */
-  cateLineInsert() {},
-  /**
-   * 更新行分类信息
-   */
-  cateLineUpdate() {},
-  /**
-   * 删除行分类信息
-   */
-  cateLineDelete() {},
 }

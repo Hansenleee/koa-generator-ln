@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const manage = require('./manage/index')
+const manage = require('./manage/api')
 const sign = require('../utils/security/sign')
 
 // 集合

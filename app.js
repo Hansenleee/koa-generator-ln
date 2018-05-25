@@ -49,7 +49,9 @@ app.use(async (ctx, next) => {
     await next()
   } else {
     // 不合法的请求
-    ctx.body.code = 'UNAVAILABLE'
+    ctx.body = {
+      code: 'UNAVAILABLE'
+    }
   }
 })
 

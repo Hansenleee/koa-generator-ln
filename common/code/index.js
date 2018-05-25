@@ -11,4 +11,5 @@ module.exports = {
   'MANAGE_USER_LOGIN_INFO_ERROR': '登录用户信息有误！',
   'MANAGE_BLOG_CATE_CODE_REPEAT': '分类的code重复',
   'MANAGE_BLOG_CATE_ERROR': '分类更改失败',
+  'MANAGE_BLOG_CATE_QUERY_ERR': '分类查询失败',
 }

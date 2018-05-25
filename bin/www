@@ -10,27 +10,6 @@ var http = require('http');
 // 日志处理模块
 var fs = require('fs');
 var logConfig = require('../config/log_config');
-// webpack
-// const webpack = require('webpack');
-// const convert = require('koa-convert')
-// const koaWebpackMiddleware = require('koa-webpack-middleware');
-// const webpackDevMiddleware = koaWebpackMiddleware.devMiddleware;
-// const webpackHotMiddleware = koaWebpackMiddleware.hotMiddleware;
-// const config = require('../webpack.config')
-// const compiler = webpack(config)
-// const wdm = webpackDevMiddleware(compiler, {
-//   watchOptions: {
-//     aggregateTimeout: 300,
-//     poll: true
-//   },
-//   reload: true,
-//   publicPath: config.output.publicPath,
-//   stats: {
-//     colors: true
-//   }
-// })
-// app.use(convert(wdm))
-// app.use(convert(webpackHotMiddleware(compiler)))
 
 /**
  * Get port from environment and store in Express.
