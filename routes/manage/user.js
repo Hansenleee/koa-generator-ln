@@ -19,9 +19,11 @@ module.exports = {
         code: 'MANAGE_USER_LOGIN_INFO_ERROR',
       }
     } else {
+      // 设置cookie
+      const token = sign.getToken(user);
+      ctx.cookies.set('_ltk', token)
       ctx.body = {
         code: 0,
-        result: sign.getToken(user),
       }
     }
   }

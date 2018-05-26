@@ -34,14 +34,14 @@ apis.forEach((api) => {
     // 注册接口
     router[method](fullUrl, async (ctx, next) => {
       // 统一判断是否需要登录
-      // if (needLogin && !data.noAuth) {
-      //   const user = sign()
-      //   if (!user) {
-      //     return ctx.body = {
-      //       code: '-1'
-      //     }
-      //   }
-      // }
+      if (needLogin && !data.noAuth) {
+        const _ltk = ctx.cookies.get('_ltk')
+        if (!sign.validateLogin(_ltk)) {
+          return ctx.body = {
+            code: '-2'
+          }
+        }
+      }
       await data.fn(ctx, next)
     })
   })

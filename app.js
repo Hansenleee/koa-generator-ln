@@ -6,6 +6,8 @@ const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
+// 解决跨域
+const cors = require('koa-cors')
 const logger = require('koa-logger')
 // 接口地址统一入口
 const index = require('./routes/index')
@@ -22,6 +24,11 @@ onerror(app)
 /**
  * 中间件
  */
+app.use(cors({
+  // 携带cookie
+  credentials: true, 
+  origin: 'http://localhost:3001'
+}));
 // 请求格式（post请求需要带参数）
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']
