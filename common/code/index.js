@@ -12,4 +12,8 @@ module.exports = {
   'MANAGE_BLOG_CATE_CODE_REPEAT': '分类的code重复',
   'MANAGE_BLOG_CATE_ERROR': '分类更改失败',
   'MANAGE_BLOG_CATE_QUERY_ERR': '分类查询失败',
+  'MANAGE_BLOG_ARTICLE_QUERY_ERR': '文章列表查询失败',
+  'MANAGE_BLOG_ARTICLE_DETAIL_QUERY_ERR': '文章详情查询失败或者不存在',
+  'MANAGE_BLOG_ARTICLE_CODE_REPEAT': '文章的code重复',
+  'MANAGE_BLOG_ARTICLE_ERROR': '文章更改失败',
 }

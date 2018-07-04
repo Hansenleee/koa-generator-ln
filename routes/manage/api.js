@@ -1,5 +1,6 @@
 const user = require('./user')
 const category = require('./category/api')
+const article = require('./article/api')
 
 const config = {
   // 用户模块
@@ -12,5 +13,5 @@ const config = {
 
 module.exports = {
   prefix: 'manage',
-  config: Object.assign({}, config, category)
+  config: Object.assign({}, config, category, article)
 }

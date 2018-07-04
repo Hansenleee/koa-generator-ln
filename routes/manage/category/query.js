@@ -12,10 +12,13 @@ module.exports = {
     // 插入
     const sql = `select h.code as header_code,
                     h.name as header_name,
+                    h.id as header_id,
                     l.code as line_code,
                     l.name as line_name,
+                    l.id as line_id,
                     d.code as detail_code,
-                    d.name as detail_name
+                    d.name as detail_name,
+                    d.id as detail_id
                 from blog_cate_header h
                 left join blog_cate_line l on h.id = l.header_id
                 left join blog_cate_detail d on l.id = d.line_id`
@@ -36,6 +39,8 @@ module.exports = {
         const hitem = {
           code: r.header_code,
           name: r.header_name,
+          level: 1,
+          id: r.header_id
         }
         headers[r.header_code] = hitem
         finals.push(hitem)
@@ -45,6 +50,8 @@ module.exports = {
         const litem = {
           code: r.line_code,
           name: r.line_name,
+          level: 2,
+          id: r.line_id
         }
         if (!lines[r.header_code]) {
           lines[r.header_code] = [litem]
@@ -57,6 +64,7 @@ module.exports = {
         const ditem = {
           code: r.detail_code,
           name: r.detail_name,
+          level: 3,
         }
         if (!details[r.line_code]) {
           details[r.line_code] = [ditem]
@@ -66,16 +74,16 @@ module.exports = {
       }
     })
     // 先将detail的详细放入到对应的line信息里
-    Object.keys(lines).forEach((lkey) => {
-      const litem = lines[lkey]
+    // Object.keys(lines).forEach((lkey) => {
+    //   const litem = lines[lkey]
 
-      litem.forEach((item, index) => {
+    //   litem.forEach((item, index) => {
 
-        if (details[item.code]) {
-          litem[index].children = details[item.code]
-        }
-      })
-    })
+    //     if (details[item.code]) {
+    //       litem[index].children = details[item.code]
+    //     }
+    //   })
+    // })
     finals.forEach((h, index) => {
       // 寻找行分类
       const hcode = h.code

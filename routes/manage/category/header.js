@@ -2,6 +2,7 @@
  * 博客分类操作信息
  */
 const query = require('../../../utils/db/sql')
+const multipleQuery = require('../../../utils/db/multiple-query')
 
 // 全局操作函数
 const _actions = {
@@ -104,9 +105,10 @@ module.exports = {
       }
     }
     // 执行sql
-    const sql = `delete from blog_cate_header where code = ?`
+    const sql = `delete from blog_cate_header where code = ?;
+                 delete from blog_cate_line where header_id = (select h.id from blog_cate_header h where h.code = ?)`
     try {
-      const result = await query(sql, [code])
+      const result = await multipleQuery(sql, [code, code])
     } catch (e) {
       ctx.body = {
         code: 'MANAGE_BLOG_CATE_ERROR',

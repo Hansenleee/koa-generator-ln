@@ -31,7 +31,7 @@ app.use(cors({
 }));
 // 请求格式（post请求需要带参数）
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+  enableTypes:['json', 'form', 'text', 'options']
 }))
 app.use(json())
 app.use(logger())
