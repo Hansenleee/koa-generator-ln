@@ -25,6 +25,11 @@ const config = {
   '/article/detail': {
     fn: detail.detailQuery,
     method: 'get',
+  },
+  // 编辑文章内容
+  '/article/detail/update': {
+    fn: detail.detailUpdate,
+    method: 'post',
   }
 }
 
