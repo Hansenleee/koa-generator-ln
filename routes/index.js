@@ -1,10 +1,12 @@
 const router = require('koa-router')()
 const manage = require('./manage/api')
+const pc = require('./pc/api')
 const sign = require('../utils/security/sign')
 
 // 集合
 const apis = [
   manage,
+  pc,
 ]
 
 // 定义全局接口前缀--/api

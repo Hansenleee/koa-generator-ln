@@ -9,18 +9,28 @@ module.exports = {
    * 查询
    */
   async queryHeader(ctx, next) {
+    // const { currentPage, pageSize } = ctx.request.query
+    const requestQuery = ctx.request.query
+    const currentPage = parseInt(requestQuery.currentPage)
+    const pageSize = parseInt(requestQuery.pageSize)
+    // 分页查询行号
+    const fromRowNumber = (currentPage - 1) * pageSize
+    const toRowNumber = currentPage * pageSize
     let result
     const sql = `select
-                   h.id, h.code, h.title, h.desciption,
-                   l.header_id as cate_header_id,
-                   h.cate_line_id,
-                   l.name as cate_name,
-                   h.creation_date
+                    h.id, h.code, h.title, h.desciption,
+                    l.header_id as cate_header_id,
+                    h.cate_line_id,
+                    l.name as cate_name,
+                    h.creation_date,
+                    (select count(*) from blog_article_header) as total
                  from blog_article_header h, blog_cate_line l
-                 where h.cate_line_id = l.id`
+                 where h.cate_line_id = l.id
+                 order by h.update_date desc
+                 LIMIT ?, ?`
     // 查询结果
     try {
-      result = await query(sql, [])
+      result = await query(sql, [fromRowNumber, toRowNumber])
     } catch (e) {
       ctx.body = {
         code: 'MANAGE_BLOG_ARTICLE_QUERY_ERR',
@@ -30,7 +40,12 @@ module.exports = {
 
     ctx.body = {
       code: 0,
-      result,
+      result: {
+        list: result,
+        currentPage,
+        pageSize,
+        totalCount: currentPage === 1 && result.length === 0 ? 0 : result[0].total || 0,
+      },
     }
   },
   /**
@@ -89,7 +104,6 @@ module.exports = {
         code: 'GLOBAL_PARAMS_ERROR',
       }
     }
-    console.log(params);
 
     const sql = `update blog_article_header
                  set title = ?,
