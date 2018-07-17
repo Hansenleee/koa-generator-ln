@@ -16,4 +16,5 @@ module.exports = {
   'MANAGE_BLOG_ARTICLE_DETAIL_QUERY_ERR': '文章详情查询失败或者不存在',
   'MANAGE_BLOG_ARTICLE_CODE_REPEAT': '文章的code重复',
   'MANAGE_BLOG_ARTICLE_ERROR': '文章更改失败',
+  'MANAGE_BLOG_ARTICLE_PASSWORD_ERR': '文章查看密码错误',
 }

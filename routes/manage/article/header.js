@@ -18,7 +18,7 @@ module.exports = {
     const toRowNumber = currentPage * pageSize
     let result
     const sql = `select
-                    h.id, h.code, h.title, h.desciption,
+                    h.id, h.code, h.title, h.desciption,h.type, h.password,
                     l.header_id as cate_header_id,
                     h.cate_line_id,
                     l.name as cate_name,
@@ -50,13 +50,14 @@ module.exports = {
   },
   /**
    * 新建
+   * @param {String} type - 文章类别：1 - 普通、2 - 加密
    */
   async headerInsert(ctx, next) {
     const params = ctx.request.body
-    const { code, title, desciption, cate_line_id } = params
+    const { code, title, desciption, cate_line_id, type, password = '' } = params
 
     // 校验参数
-    if (!code || !title || !cate_line_id || !desciption) {
+    if (!code || !title || !cate_line_id || !desciption || !type) {
       return ctx.body = {
         code: 'GLOBAL_PARAMS_ERROR',
       }
@@ -74,13 +75,14 @@ module.exports = {
     // 插入
     const sql = `insert into
                  blog_article_header
-                 (code, title, desciption, cate_line_id, creation_date, created_by, update_date, update_by)
+                 (code, title, desciption, cate_line_id, type, password, creation_date, created_by, update_date, update_by)
                  VALUES
-                 (?, ?, ?, ?, now(), 1, now(), 1)`
+                 (?, ?, ?, ?, ?, ?, now(), 1, now(), 1)`
     // 查询结果
     try {
-      result = await query(sql, [code, title, desciption, cate_line_id])
+      result = await query(sql, [code, title, desciption, cate_line_id, type, password])
     } catch (e) {
+      global.console.log(e);
       ctx.body = {
         code: 'MANAGE_BLOG_ARTICLE_ERROR',
       }
@@ -96,7 +98,7 @@ module.exports = {
    */
   async headerUpdate(ctx, next) {
     const params = ctx.request.body
-    const { code, title, desciption, cate_line_id } = params
+    const { code, title, desciption, cate_line_id, type, password } = params
 
     // 校验参数
     if (!code || !title || !cate_line_id || !desciption) {
@@ -108,10 +110,12 @@ module.exports = {
     const sql = `update blog_article_header
                  set title = ?,
                      cate_line_id = ?,
-                     desciption = ?
+                     desciption = ?,
+                     type = ?,
+                     password = ?
                   where code = ?`
     try {
-      const result = await query(sql, [title, cate_line_id, desciption, code])
+      const result = await query(sql, [title, cate_line_id, desciption, type, password, code])
     } catch (e) {
       ctx.body = {
         code: 'MANAGE_BLOG_ARTICLE_ERROR',

@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS  `blog_article_header` (
   `short_desc` varchar(200),
   `cate_line_id` int(11) NOT NULL,
   `tag` varchar(255),
+  `type` varchar(255),
+  `password` varchar(255),
   `creation_date` datetime NOT NULL,
   `created_by` int(100) NOT NULL,
   `update_date` datetime NOT NULL,
