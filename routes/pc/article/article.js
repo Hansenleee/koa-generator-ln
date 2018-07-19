@@ -11,24 +11,31 @@ module.exports = {
     const requestQuery = ctx.request.query
     const currentPage = parseInt(requestQuery.currentPage)
     const pageSize = parseInt(requestQuery.pageSize)
+    const categoryId = parseInt(requestQuery.categoryId || 0)
     // 分页查询行号
     const fromRowNumber = (currentPage - 1) * pageSize
     const toRowNumber = currentPage * pageSize
     let result
-    const sql = `select
-                    h.id, h.code, h.title, h.desciption, h.type,
-                    l.header_id as cate_header_id,
-                    h.cate_line_id,
-                    l.name as cate_name,
-                    UNIX_TIMESTAMP(h.update_date) as date,
-                    (select count(*) from blog_article_header) as total
-                 from blog_article_header h, blog_cate_line l
-                 where h.cate_line_id = l.id
-                 order by h.update_date desc
-                 LIMIT ?, ?`
+    // 这里利用rouwnum去查找总数
+    const sql = `select *
+                   from (
+                          select
+                              h.id, h.code, h.title, h.desciption, h.type,
+                              l.header_id as cate_header_id,
+                              h.cate_line_id,
+                              l.name as cate_name,
+                              UNIX_TIMESTAMP(h.update_date) as date,
+                              @rownum:=@rownum+1 as rownum
+                          from blog_article_header h, blog_cate_line l, (SELECT @rownum:=0) r
+                          where h.cate_line_id = l.id
+                            and (l.id = ? or ? = 0)
+                          order by h.update_date asc
+                        ) p
+                  order by p.date desc
+                  Limit ?, ?`
     // 查询结果
     try {
-      result = await query(sql, [fromRowNumber, toRowNumber])
+      result = await query(sql, [categoryId, categoryId, fromRowNumber, toRowNumber])
     } catch (e) {
       ctx.body = {
         code: 'MANAGE_BLOG_ARTICLE_QUERY_ERR',
@@ -42,7 +49,7 @@ module.exports = {
         list: result,
         currentPage,
         pageSize,
-        totalCount: currentPage === 1 && result.length === 0 ? 0 : result[0].total || 0,
+        totalCount: currentPage === 1 && result.length === 0 ? 0 : result[0].rownum || 0,
       },
     }
   },
@@ -50,9 +57,9 @@ module.exports = {
    * 查询文章详情
    */
   async queryArticlesDetail(ctx, next) {
-    console.log(process.env.NODE_ENV)
     const { id } = ctx.params
-    const { password } = ctx.request.query
+    const { password = '' } = ctx.request.query
+    global.console.log(password)
 
     let result
     const sql = `select h.title,
@@ -63,7 +70,7 @@ module.exports = {
                  left join blog_article_detail d on d.header_id = h.id
                  where h.id = ?
                    and h.cate_line_id = l.id
-                   and (h.type != '2' or md5(h.password) = ?)`
+                   and (h.type is null or h.type != '2' or md5(h.password) = ?)`
     // 查询结果
     try {
       result = await query(sql, [id, password])

@@ -66,7 +66,8 @@ module.exports = {
     } else {
       // 编辑修改
       sql = `update blog_article_detail
-             set content = ?
+             set content = ?,
+                 update_date = now()
              where header_id = ?`
     }
 
